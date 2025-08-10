@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 from sentence_transformers import SentenceTransformer, util
+import uvicorn
 
 app = FastAPI()
 model = SentenceTransformer('all-mpnet-base-v2')
@@ -18,3 +19,6 @@ def check_answer(data: CompareRequest):
         "similarity_score": round(similarity_score, 2),
         "is_correct": is_correct
     }
+
+if __name__ == "__main__":
+    uvicorn.run("api:app", host="0.0.0.0", port=8000, reload=True)
